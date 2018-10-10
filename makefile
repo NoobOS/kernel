@@ -5,14 +5,20 @@ ASPARAMS = --32
 LDPARAMS = -melf_i386
 
 objects = obj/loader.o \
-          obj/kernel.o
+	  obj/kernel.o
 
 obj/%.o: src/%.cpp
+	mkdir -p $(@D)
 	gcc $(GCCPARAMS) -c -o $@ $<
 
 obj/%.o: src/%.s
+	mkdir -p $(@D)
 	as $(ASPARAMS) -o $@ $<
 	
-noobkernel.bin: linker.ld $(objects)
+out/noobkernel.bin: linker.ld $(objects)
+	mkdir -p $(@D)
 	ld $(LDPARAMS) -T $< -o $@ $(objects)
-	
+
+install: out/noobkernel.bin
+	sudo cp $< /boot/noobkernel.bin
+
