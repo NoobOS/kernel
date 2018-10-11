@@ -1,5 +1,6 @@
 
 #include "../include/common/types.h"
+#include "../include/gdt.h"
 
 void printf(char* str){
 	uint16_t* VideoMemory = (uint16_t*)0xb8000;
@@ -20,5 +21,8 @@ extern "C" void callConstructors(){
 
 extern "C" void kernelMain (void* multiboot_structure,uint32_t magicnumber/*MUltiboot Magic No.*/){
 	printf(".......** chankruze os **.......");
+        
+        GlobalDescripterTable gdt;
+        
 	while(1);
 }
